@@ -7,4 +7,4 @@ const thoughtModel = mongoose.Schema({
     created_at: { type: Date, default: Date.now }
 })
 
-export default model('Thought', thoughtModel);
+export default mongoose.model('Thought', thoughtModel);
