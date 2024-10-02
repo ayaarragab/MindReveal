@@ -1,0 +1,29 @@
+{
+  "name": "mindreveal-api",
+  "version": "1.0.0",
+  "description": "MindReveal API helps users uncover and organize their inner thoughts effortlessly. With features like user authentication, thought submission, dynamic categorization using BERT for enhanced understanding, and search functionality, it transforms complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB, this API harnesses advanced text processing techniques to streamline thought management.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayaarragab/MindReveal-API.git"
+  },
+  "keywords": [
+    "express.js",
+    "node.js",
+    "javascript",
+    "mongodb",
+    "productivity"
+  ],
+  "author": "ayaarragab",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayaarragab/MindReveal-API/issues"
+  },
+  "homepage": "https://github.com/ayaarragab/MindReveal-API#readme",
+  "dependencies": {
+    "jsonwebtoken": "^9.0.2"
+  }
+}
