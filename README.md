@@ -1,2 +1,2 @@
 # MindReveal-API
-MindReveal API helps users organize their inner thoughts effortlessly. It transforms complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB, this API streamlines thought management through advanced text processing.
+MindReveal API helps users uncover and organize their inner thoughts effortlessly. With features like user authentication, thought submission, dynamic categorization using BERT for enhanced understanding, and search functionality, it transforms complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB, this API harnesses advanced text processing techniques to streamline thought management.
