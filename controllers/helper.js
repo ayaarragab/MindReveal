@@ -1,6 +1,6 @@
 const serverErrorsHandler = (response, error) => {
     console.error(error);
-    response.status(500).json({
+    return response.status(500).json({
         "status": "error",
         "message": "An internal server error occurred.",
         "error": {
