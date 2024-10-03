@@ -13,6 +13,9 @@ app.use(morgan('dev'))
 
 app.use(express.json());
 
+// all endpoints will start with /api/v1 (following restFul API rules)
+app.use('/api/v1/'/**, Middlewares will be here */);
+
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => (console.log('Hello User!')));
