@@ -1,3 +1,5 @@
+import User from "../models/user.js";
+
 export default class UserController {
     static async register(request, response) {
         try {
@@ -14,7 +16,7 @@ export default class UserController {
             try {
                 const user = await User.create({username, password});
                 /**
-                 * Token things should be here
+                 * Pending: Token things should be here
                  */
                 response.status(200).json({
                     "status": "success",
