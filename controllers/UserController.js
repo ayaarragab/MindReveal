@@ -48,7 +48,7 @@ export default class UserController {
 
             return response.status(200).json({
                 "status": "success",
-                "message": "Request was successful.",
+                "message": "You have registeres successfully.",
                 token,
                 "data": [user]
             });
@@ -83,7 +83,8 @@ export default class UserController {
                     "message": "An error occurred.",
                     "error": {
                         "code": 401,
-                        "details": "Invalid credentials"
+                        "details": "Invalid credentials, please try again"
+                        + "If you're new to the API, please register first!"
                     }
                 });
             }
