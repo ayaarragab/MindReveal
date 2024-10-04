@@ -1,5 +1,7 @@
 import User from "../models/user.js";
 import AuthController from "./AuthController.js";
+import serverErrorsHandler from "./helper.js";
+import bcrypt from "bcrypt";
 
 // Validation function
 const validate = (request) => {
@@ -52,20 +54,12 @@ export default class UserController {
             });
 
         } catch (error) {
-            // Catch and format server errors
-            return response.status(500).json({
-                "status": "error",
-                "message": "An error occurred.",
-                "error": {
-                    "code": 500,
-                    "details": error.message
-                }
-            });
+            serverErrorsHandler(response, error);
         }
     }
 
     // Signin Method
-    static async signin(request, response) {
+    static async login(request, response) {
         try {
             // Validate input
             const validateInput = validate(request);
@@ -82,6 +76,7 @@ export default class UserController {
 
             // Find user
             const user = await User.findOne({ username: request.body.username });
+            
             if (!user) {
                 return response.status(401).json({
                     "status": "error",
@@ -94,8 +89,9 @@ export default class UserController {
             }
 
             // Compare passwords
-            const isValid = await AuthController.comparePasswords(request.body.password, user.password);
-            if (!isValid) {
+            const isValid = bcrypt.compare(request.body.password, user.password);
+            
+            if (!isValid) {                
                 return response.status(401).json({
                     "status": "error",
                     "message": "An error occurred.",
@@ -111,21 +107,13 @@ export default class UserController {
 
             return response.status(200).json({
                 "status": "success",
-                "message": "Request was successful.",
+                "message": "You've logged in successfully",
                 token,
                 "data": [user]
             });
 
         } catch (error) {
-            // Catch and format server errors
-            return response.status(500).json({
-                "status": "error",
-                "message": "An error occurred.",
-                "error": {
-                    "code": 500,
-                    "details": error.message
-                }
-            });
+            serverErrorsHandler(response, error);
         }
     }
 }

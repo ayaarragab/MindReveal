@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import User from "../../models/user.js";
+import User from "../models/user.js";
 import bcrypt from "bcrypt";
 
 export default class AuthController{
@@ -31,13 +31,7 @@ export default class AuthController{
 
     }
 
-    static comparePasswords (passwordPlain, hashedPassword) {
-        return bcrypt.compare(passwordPlain, hashedPassword);
-    }
-
-    static async hashedPassword(password) {
-        return await bcrypt.hash(password, 10);
-    }
-
-    
+    static async hashPassword(password) {
+        return await bcrypt.hash(password, 5);
+    }    
 }

@@ -2,6 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import DBClient from "./config/db.js";
+import router from "./routes/routes.js";
 
 await DBClient.getConnection();
 
@@ -14,7 +15,7 @@ app.use(morgan('dev'))
 app.use(express.json());
 
 // all endpoints will start with /api/v1 (following restFul API rules)
-app.use('/api/v1/'/**, Middlewares will be here */);
+app.use('/api/v1/', router);
 
 const PORT = process.env.PORT;
 
