@@ -83,7 +83,7 @@ export default class UserController {
                     "message": "An error occurred.",
                     "error": {
                         "code": 401,
-                        "details": "Invalid credentials, please try again"
+                        "details": "Invalid credentials, please try again "
                         + "If you're new to the API, please register first!"
                     }
                 });
@@ -98,14 +98,13 @@ export default class UserController {
                     "message": "An error occurred.",
                     "error": {
                         "code": 401,
-                        "details": "Invalid credentials"
+                        "details": "Password is not correct"
                     }
                 });
             }
 
             // Generate JWT token
             const token = AuthController.createJWT(user);
-
             return response.status(200).json({
                 "status": "success",
                 "message": "You've logged in successfully",

@@ -18,8 +18,9 @@ Authorization: Bearer YOUR_TOKEN
 **POST** `/api/v1/register`
 
 #### Response
-##### If Success:
-**200 OK**
+
+##### If user registered successfully:
+###### 200 OK
 ```json
 {
     "status": "success",
@@ -30,8 +31,9 @@ Authorization: Bearer YOUR_TOKEN
     }
 }
 ```
-##### If user exists:
-**400 Bad Request**
+
+##### If already user exists:
+###### 400 Bad Request
 ```json
 {
     "status": "error",
@@ -43,8 +45,21 @@ Authorization: Bearer YOUR_TOKEN
 }
 ```
 
+##### If password or username is missing:
+###### 400 Bad Request
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "username and password are required! One of them is missing."
+    }
+}
+```
+
 ##### If server error:
-**500 Internal Server Error**
+###### 500 Internal Server Error
 ```json
 {
         "status": "error",
@@ -56,13 +71,15 @@ Authorization: Bearer YOUR_TOKEN
 }
 ```
 
+
+
 ### Login
 **POST** `/api/v1/login`
 
 #### Response
 
 ##### If Success:
-**200 OK**
+###### 200 OK
 ```json
 {
     "status": "success",
@@ -75,7 +92,7 @@ Authorization: Bearer YOUR_TOKEN
 ```
 
 ##### If one of the credintals doesn't exist or empty:
-**400 Bad Request**
+###### 400 Bad Request
 ```json
 {
     "status": "error",
@@ -88,7 +105,7 @@ Authorization: Bearer YOUR_TOKEN
 ```
 
 ##### If password is invalid or user is not found:
-**401 Not Authorized**
+###### 401 Not Authorized
 ```json
 {
     "status": "error",
@@ -100,8 +117,21 @@ Authorization: Bearer YOUR_TOKEN
 }
 ```
 
+##### If password is incorrect:
+###### 401 Unauthorized
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "Password is not correct"
+    }
+}
+```
+
 ##### If server error:
-**500 Internal Server Error**
+###### 500 Internal Server Error
 ```json
 {
         "status": "error",
