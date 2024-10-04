@@ -17,6 +17,14 @@ Authorization: Bearer YOUR_TOKEN
 
 **POST** `/mindreveal/api/v1/register`
 
+#### Request body
+```json
+{
+    username: "<username>",
+    password: "<password>"
+}
+```
+
 #### Response
 
 ##### If user registered successfully:
@@ -75,6 +83,13 @@ Authorization: Bearer YOUR_TOKEN
 
 ### Login
 **POST** `/mindreveal/api/v1/login`
+
+#### Request body
+```json
+{
+    username: "<username>",
+    password: "<password>"
+}
 
 #### Response
 
@@ -147,6 +162,14 @@ Authorization: Bearer YOUR_TOKEN
 ### Add a thought
 **POST** `/mindreveal/api/v1/thoughts`
 
+#### Request body
+```json
+{
+    content: "<content_to_add>",
+    category_id: "<category_id>" // optional
+}
+```
+
 #### Response
 
 ##### If thought added successfully:
@@ -191,6 +214,8 @@ Authorization: Bearer YOUR_TOKEN
 
 ### Retrieve all thoughts
 **GET** `/mindreveal/api/v1/thoughts`
+
+#### Response
 
 ##### If thoughts retrieved successfully:
 ###### 200 OK
@@ -253,7 +278,7 @@ Authorization: Bearer YOUR_TOKEN
 
 ### Edit a thought
 **PUT** `/mindreveal/api/v1/thoughts/:thoughtId`
-**Request body**
+#### Request body
 ```json
 {
   "text": "Updated thought content",
@@ -299,4 +324,5 @@ Authorization: Bearer YOUR_TOKEN
     "data": /* thought object */
 }
 ```
+
 # error-codes
