@@ -18,6 +18,8 @@ Authorization: Bearer YOUR_TOKEN
 - [Retrieve all thoughts](#retrieve-all-thoughts)
 - [Search for thoughts by keyword](#search-for-thoughts-by-keyword)
 - [Edit a thought](#edit-a-thought)
+- [Delete a thought](#Delete-a-thought)
+- [Delete all thoughts](#Delete-all-thoughts)
 
 ### Register
 
@@ -331,4 +333,99 @@ Authorization: Bearer YOUR_TOKEN
 }
 ```
 
-# error-codes
+
+### Delete a thought
+**DELETE** `/mindreveal/api/v1/thoughts/:thoughtId`
+
+#### Parameters
+- `thoughtId` (string, required): ID of the thought to delete.
+
+#### Response
+
+##### If thought deleted successfully:
+###### 200 OK
+```json
+{
+    "status": "success",
+    "message": "Thought deleted successfully."
+}
+```
+
+##### If thought isn't found:
+###### 404 Not Found
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Thought not found."
+    }
+}
+```
+
+##### If the user is not authorized to access this endpoint (not registered or logged in):
+###### 401 Unauthorized
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+###### 500 Internal Server Error
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Delete all thoughts
+**DELETE** `/mindreveal/api/v1/thoughts`
+
+#### Response
+
+##### If thoughts deleted successfully:
+###### 200 OK
+```json
+{
+    "status": "success",
+    "message": "<number_of_deleted_thoughts> thoughts deleted successfully."
+}
+```
+
+##### If the user is not authorized to access this endpoint (not registered or logged in):
+###### 401 Unauthorized
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+###### 500 Internal Server Error
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```

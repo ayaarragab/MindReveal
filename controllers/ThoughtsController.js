@@ -120,4 +120,49 @@ export default class ThoughtController {
             serverErrorsHandler(response, error);
         }
     }
+
+    static async deleteThought(request, response) {
+        try {
+            const { thoughtId } = request.params;
+    
+            if (!thoughtId) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Thought ID is required."
+                    }
+                });
+            }
+            try {
+                await Thought.findByIdAndDelete(thoughtId);
+                response.status(200).json({
+                    "status": "success",
+                    "message": "Thought deleted successfully.",
+                    "data": []
+                });
+            } catch (error) {
+                serverErrorsHandler(response, error);
+            }
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }      
+    }
+
+    static async deleteAllThoughts(request, response) {
+        try {
+            const userId = request.user._id;
+    
+            const result = await Thought.deleteMany({ user_id: userId });
+    
+            response.status(200).json({
+                status: "success",
+                message: `${result.deletedCount} thoughts deleted successfully.`,
+            });
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }
+    }
+    
 }
