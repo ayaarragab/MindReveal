@@ -34,13 +34,13 @@ export default class ThoughtController {
             const thoughts = await Thought.find({user_id: user._id});
             if (!thoughts) {
                 response.status(404).json({
-                    status: 404,
+                    status: "error",
                     message: "You didn't write your thoughts yet!",
                     data: []
                 })
             }
             response.status(200).json({
-                status: 200,
+                status: "success",
                 message: "Here's all thoughts that you've written",
                 data: thoughts
             })
@@ -67,7 +67,7 @@ export default class ThoughtController {
                 .exec();
 
             response.status(200).json({
-                status: 200,
+                status: "success",
                 message: "Search completed successfully.",
                 data: thoughts
             });
@@ -76,7 +76,48 @@ export default class ThoughtController {
         }
     }
 
-    static async filterThoughts(request, response) {
-
+    static async updateThought(request, response) {
+        try {
+            const { thoughtId } = request.params;
+            const updateData = request.body;
+    
+            if (!thoughtId) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Thought ID is required."
+                    }
+                });
+            }
+    
+            const updatedThought = await Thought.findByIdAndUpdate(
+                thoughtId,
+                updateData,
+                { new: true }
+            );
+    
+            // If the thought is not found
+            if (!updatedThought) {
+                return response.status(404).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 404,
+                        "details": "Thought not found."
+                    }
+                });
+            }
+    
+            response.status(200).json({
+                "status": "success",
+                "message": "Thought updated successfully.",
+                "data": updatedThought
+            });
+    
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }
     }
 }

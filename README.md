@@ -196,7 +196,7 @@ Authorization: Bearer YOUR_TOKEN
 ###### 200 OK
 ```json
 {
-    "status": 200,
+    "status": "success",
     "message": "Here's all thoughts that you've written",
     "data": /* thoughts array */
 }
@@ -251,5 +251,52 @@ Authorization: Bearer YOUR_TOKEN
 }
 ```
 
+### Edit a thought
+**PUT** `/mindreveal/api/v1/thoughts/:thoughtId`
+**Request body**
+```json
+{
+  "text": "Updated thought content",
+  "category_id": "987654321"
+}
+```
+#### Response
 
+##### If thought id doesn't exist in the request body
+###### 400 Bad Request
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Thought ID is required."
+    }
+}
+```
+
+##### If thought isn't found:
+###### 404 Not Found
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Thought not found."
+    }
+}
+```
+
+
+
+##### If thought updated successfully:
+###### 200 OK
+```json
+{
+    "status": "success",
+    "message": "Thought updated successfully.",
+    "data": /* thought object */
+}
+```
 # error-codes

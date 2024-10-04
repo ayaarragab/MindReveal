@@ -16,10 +16,9 @@ router.post('/login', UserController.login);
  */
 router.post('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.addThought)
 router.get('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.getThoughts)
-// router.put('/thoughts/:id', AuthMiddlewares.isAuthorized, ThoughtController.updateThought)
+router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.updateThought)
 // router.delete('/thoughts/:id', AuthMiddlewares.isAuthorized, ThoughtController.deleteThought)
 // router.delete('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.deleteAllThoughts)
 router.get('/thoughts/search', AuthMiddlewares.isAuthorized, ThoughtController.searchThoughts)
-router.get('/thoughts/filter', AuthMiddlewares.isAuthorized, ThoughtController.filterThoughts)
 
 export default router;
