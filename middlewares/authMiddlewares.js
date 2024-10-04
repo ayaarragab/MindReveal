@@ -1,5 +1,5 @@
-import serverErrorsHandler from "./helper.js";
-import AuthController from "../controllers/AuthController";
+import serverErrorsHandler from "../controllers/helper.js";
+import AuthController from "../controllers/AuthController.js";
 
 export default class AuthMiddlewares{
     static async isAuthorized(request, response, next) {

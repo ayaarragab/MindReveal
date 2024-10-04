@@ -7,4 +7,6 @@ const thoughtModel = mongoose.Schema({
     created_at: { type: Date, default: Date.now }
 })
 
+thoughtModel.index({ content: 'text' });
+
 export default mongoose.model('Thought', thoughtModel);

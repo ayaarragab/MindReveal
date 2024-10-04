@@ -14,8 +14,7 @@ app.use(morgan('dev'))
 
 app.use(express.json());
 
-// all endpoints will start with /api/v1 (following restFul API rules)
-app.use('/api/v1/', router);
+app.use('/mindreveal/api/v1/', router);
 
 const PORT = process.env.PORT;
 

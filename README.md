@@ -15,7 +15,7 @@ Authorization: Bearer YOUR_TOKEN
 
 ### Register
 
-**POST** `/api/v1/register`
+**POST** `/mindreveal/api/v1/register`
 
 #### Response
 
@@ -74,7 +74,7 @@ Authorization: Bearer YOUR_TOKEN
 
 
 ### Login
-**POST** `/api/v1/login`
+**POST** `/mindreveal/api/v1/login`
 
 #### Response
 
@@ -127,6 +127,114 @@ Authorization: Bearer YOUR_TOKEN
         "code": 401,
         "details": "Password is not correct"
     }
+}
+```
+
+##### If server error:
+###### 500 Internal Server Error
+```json
+{
+        "status": "error",
+        "message": "An internal server error occurred.",
+        "error": {
+            "code": 500,
+            "details": "Please try again later."
+        }
+}
+```
+
+
+### Add a thought
+**POST** `/mindreveal/api/v1/thoughts`
+
+#### Response
+
+##### If thought added successfully:
+###### 200 OK
+```json
+{
+    "status": "success",
+    "message": "Thought added.",
+    "data": [/* Thought object*/ ]
+}
+```
+
+##### If server error:
+###### 500 Internal Server Error
+```json
+{
+        "status": "error",
+        "message": "An internal server error occurred.",
+        "error": {
+            "code": 500,
+            "details": "Please try again later."
+        }
+}
+```
+
+
+##### If the user not authorized to access this endpoint (aka not registered or logged in)
+###### 401 Not Authorized
+```json
+{
+  "status": "error",
+  "message": "An error occurred.",
+  "error": {
+    "code": 401,
+    "details": "You are not authorized to access this page!"
+  }
+}
+``` 
+
+
+
+
+### Retrieve all thoughts
+**GET** `/mindreveal/api/v1/thoughts`
+
+##### If thoughts retrieved successfully:
+###### 200 OK
+```json
+{
+    "status": 200,
+    "message": "Here's all thoughts that you've written",
+    "data": /* thoughts array */
+}
+```
+
+
+
+
+##### If server error:
+###### 500 Internal Server Error
+```json
+{
+        "status": "error",
+        "message": "An internal server error occurred.",
+        "error": {
+            "code": 500,
+            "details": "Please try again later."
+        }
+}
+```
+
+
+
+
+### Search for thoughts by keyword
+**GET** `/mindreveal/api/v1/thoughts/search?keyword=<yout_keyword>&page=<page_num>&limit=<num_of_items>`
+- `keyword` (string): Search term for filtering thoughts by content.
+- `page` (integer): Page number for pagination.
+- `limit` (integer): Number of results per page.
+
+#### Response
+
+##### If thoughts of the keyword retrieved successfully:
+```json
+{
+    "status": 200,
+    "message": "Search completed successfully.",
+    "data": thoughts
 }
 ```
 
