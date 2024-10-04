@@ -12,6 +12,12 @@ To access the API, you must include a valid JWT Token in the header. Register to
 Authorization: Bearer YOUR_TOKEN
 
 ## Endpoints
+- [Register](#register)
+- [Login](#login)
+- [Add a thought](#add-a-thought)
+- [Retrieve all thoughts](#retrieve-all-thoughts)
+- [Search for thoughts by keyword](#search-for-thoughts-by-keyword)
+- [Edit a thought](#edit-a-thought)
 
 ### Register
 
