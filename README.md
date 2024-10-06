@@ -26,6 +26,9 @@ Authorization: Bearer YOUR_TOKEN
 - [Delete a thought](#Delete-a-thought)
 - [Delete all thoughts](#Delete-all-thoughts)
 - [Create a category](#Create-a-category)
+- [Retrieve all categories](#Retrieve-all-categories)
+- [Update a category](#Update-a-category)
+
 
 ### Register
 
@@ -527,6 +530,140 @@ Authorization: Bearer YOUR_TOKEN
     "error": {
         "code": 400,
         "details": "Category name is required."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Retrieve all categories
+
+**GET** `/mindreveal/api/v1/categories`
+
+#### Response
+
+##### If categories retrieved successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Categories retrieved successfully.",
+    "data": [/* categories array */]
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Update a category
+
+**PUT** `/mindreveal/api/v1/categories/:categoryId`
+
+#### Request body
+
+```json
+{
+    "name": "Updated category name"
+}
+```
+
+#### Response
+
+##### If category updated successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Category updated successfully.",
+    "data": /* category object */
+}
+```
+
+##### If category ID is missing:
+
+###### 400 Bad Request
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Category ID is required."
+    }
+}
+```
+
+##### If category isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Category not found."
     }
 }
 ```

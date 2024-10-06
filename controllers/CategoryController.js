@@ -55,10 +55,10 @@ export default class CategoryController {
 
     static async updateCateogry(request, response) {
         try {
-            const { cateogryId } = request.params;
+            const { categoryId } = request.params;
             const updateData = request.body;
     
-            if (!cateogryId) {
+            if (!categoryId) {
                 return response.status(400).json({
                     "status": "error",
                     "message": "An error occurred.",
@@ -70,7 +70,7 @@ export default class CategoryController {
             }
     
             const updatedCat = await Category.findByIdAndUpdate(
-                cateogryId,
+                categoryId,
                 updateData,
                 { new: true }
             );

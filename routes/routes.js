@@ -28,4 +28,6 @@ router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtControll
  * Categories endpoints
  */
 router.post('/categories', AuthMiddlewares.isAuthorized, CategoryController.createCateogry);
+router.get('/categories', AuthMiddlewares.isAuthorized, CategoryController.retrieveCategories);
+router.put('/categories/:categoryId', AuthMiddlewares.isAuthorized, CategoryController.updateCateogry);
 export default router;
