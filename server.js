@@ -19,6 +19,4 @@ app.use('/mindreveal/api/v1/', router);
 
 const PORT = process.env.PORT;
 
-await category.create({name: "me", user_id: "66fd8b74a4df1a9318c849f9"})
-
 app.listen(PORT, () => (console.log('Hello User!')));
