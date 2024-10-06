@@ -26,6 +26,7 @@ Authorization: Bearer YOUR_TOKEN
 - [Delete a thought](#Delete-a-thought)
 - [Delete all thoughts](#Delete-all-thoughts)
 
+
 ### Register
 
 **POST** `/mindreveal/api/v1/register`
@@ -247,6 +248,7 @@ Authorization: Bearer YOUR_TOKEN
     }
 }
 ```
+
 
 ### Retrieve all thoughts
 
