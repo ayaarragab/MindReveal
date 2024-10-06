@@ -1,10 +1,20 @@
-import Category from "../models/category";
+import Category from "../models/category.js";
 import serverErrorsHandler from "./helper.js";
 
 export default class CategoryController {
     static async createCateogry(request, response) {
         try {
-            const { name } = request.params;
+            const { name } = request.body;
+            if (!name) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Category name is required."
+                    }
+                })
+            }
             const user_id = request.user._id;
             const category = await Category.create({
                 name,

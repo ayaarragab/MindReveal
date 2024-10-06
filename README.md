@@ -1,5 +1,5 @@
 # MindReveal-API
-MindReveal API helps users uncover and organize their inner thoughts effortlessly. With features like user authentication, thought submission, manual categorization and search functionality, it makes you transforms complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB.
+MindReveal API helps users uncover and organize their inner thoughts effortlessly. With features like user authentication, thought submission, manual categorization and search functionality, it makes you transform complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB.
 
 ## Table of Contents
 
@@ -25,7 +25,7 @@ Authorization: Bearer YOUR_TOKEN
 - [Edit a thought](#edit-a-thought)
 - [Delete a thought](#Delete-a-thought)
 - [Delete all thoughts](#Delete-all-thoughts)
-
+- [Create a category](#Create-a-category)
 
 ### Register
 
@@ -459,6 +459,79 @@ Authorization: Bearer YOUR_TOKEN
 ```
 
 ##### If the user is not authorized to access this endpoint (not registered or logged in):
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Create a category
+
+**POST** `/mindreveal/api/v1/categories`
+
+#### Request body
+
+```json
+{
+    "name": "<category_name>"
+}
+```
+
+#### Response
+
+##### If category created successfully:
+
+###### 201 Created
+
+```json
+{
+    "status": "success",
+    "message": "Category created successfully.",
+    "data": {
+        // category object
+    }
+}
+```
+
+##### If category name is missing:
+
+###### 400 Bad Request
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Category name is required."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
 
 ###### 401 Unauthorized
 

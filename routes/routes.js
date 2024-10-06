@@ -2,6 +2,7 @@ import { Router } from "express";
 import UserController from "../controllers/UserController.js";
 import ThoughtController from "../controllers/ThoughtsController.js";
 import AuthMiddlewares from "../middlewares/authMiddlewares.js";
+import CategoryController from "../controllers/CategoryController.js";
 
 const router = Router();
 
@@ -20,5 +21,11 @@ router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtControll
 router.delete('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.deleteThought)
 router.delete('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.deleteAllThoughts)
 router.get('/thoughts/search', AuthMiddlewares.isAuthorized, ThoughtController.searchThoughts)
+router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.addThoughtToCategory);
+router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.deleteThoughtFromCategory);
 
+/**
+ * Categories endpoints
+ */
+router.post('/categories', AuthMiddlewares.isAuthorized, CategoryController.createCateogry);
 export default router;

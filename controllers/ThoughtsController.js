@@ -164,5 +164,12 @@ export default class ThoughtController {
             serverErrorsHandler(response, error);
         }
     }
-    
+
+    static async addThoughtToCategory(request, response) {
+
+    }
+
+    static async deleteThoughtFromCategory(request, response) {
+
+    }
 }
