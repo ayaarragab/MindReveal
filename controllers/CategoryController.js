@@ -34,7 +34,7 @@ export default class CategoryController {
        const user_id = request.user._id;
        try {
         const categories = await Category.find({user_id});
-        if (!categories) {
+        if (!categories || categories == []) {
             response.status(404).json({
                 "status": "error",
                 "message": "You've not created any categories yet!",
@@ -51,6 +51,51 @@ export default class CategoryController {
        } catch (error) {
         serverErrorsHandler(response, error);
        }
+    }
+
+    static async retrieveCategory(request, response) {
+        try {
+            const { categoryId } = request.params;
+            if (!categoryId) {
+                return response.status(400).json(
+                    {
+                        "status": "error",
+                        "message": "An error occurred.",
+                        "error": {
+                            "code": 400,
+                            "details": "Category ID is required."
+                        }
+                    }
+                )
+            }
+            try {
+                const category = await Category.findOne({_id: categoryId});
+                if (!category) {
+                    return response.status(404).json(
+                        {
+                            "status": "error",
+                            "message": "An error occurred.",
+                            "error": {
+                                "code": 404,
+                                "details": "This category doesn't exist"
+                            }
+                        }   
+                    )
+                }
+                
+                response.status(200).json(
+                    {
+                        "status": "success",
+                        "message": `Here's ${category.name} category`,
+                        "data": category
+                    }
+                )
+            } catch (error) {
+                serverErrorsHandler(response, error);
+            }
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }
     }
 
     static async updateCateogry(request, response) {
@@ -99,9 +144,9 @@ export default class CategoryController {
 
     static async deleteCateogry(request, response) {
         try {
-            const { cateogryId } = request.params;
+            const { categoryId } = request.params;
     
-            if (!cateogryId) {
+            if (!categoryId) {
                 return response.status(400).json({
                     "status": "error",
                     "message": "An error occurred.",
@@ -112,7 +157,7 @@ export default class CategoryController {
                 });
             }
             try {
-                await Category.findByIdAndDelete(cateogryId);
+                await Category.findByIdAndDelete(categoryId);
                 response.status(200).json({
                     "status": "success",
                     "message": "Category deleted successfully.",
@@ -132,10 +177,17 @@ export default class CategoryController {
     
             const result = await Category.deleteMany({ user_id: userId });
     
-            response.status(200).json({
-                status: "success",
-                message: `${result.deletedCount} categories deleted successfully.`,
-            });
+            if (result.deletedCount == 1) {
+                response.status(200).json({
+                    status: "success",
+                    message: `${result.deletedCount} category deleted successfully.`,
+                });
+            } else {
+                response.status(200).json({
+                    status: "success",
+                    message: `${result.deletedCount} categories deleted successfully.`,
+                });
+            }
         } catch (error) {
             serverErrorsHandler(response, error);
         }

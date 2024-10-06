@@ -29,5 +29,9 @@ router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtControll
  */
 router.post('/categories', AuthMiddlewares.isAuthorized, CategoryController.createCateogry);
 router.get('/categories', AuthMiddlewares.isAuthorized, CategoryController.retrieveCategories);
+router.get('/categories/:categoryId', AuthMiddlewares.isAuthorized, CategoryController.retrieveCategory);
 router.put('/categories/:categoryId', AuthMiddlewares.isAuthorized, CategoryController.updateCateogry);
+
+router.delete('/categories/:categoryId', AuthMiddlewares.isAuthorized, CategoryController.deleteCateogry);
+router.delete('/categories', AuthMiddlewares.isAuthorized, CategoryController.deleteAllCategories);
 export default router;

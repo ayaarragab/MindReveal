@@ -28,7 +28,9 @@ Authorization: Bearer YOUR_TOKEN
 - [Create a category](#Create-a-category)
 - [Retrieve all categories](#Retrieve-all-categories)
 - [Update a category](#Update-a-category)
-
+- [Retrieve a category](#Retrieve-a-category)
+- [Delete a category](#Delete-a-category)
+- [Delete all categories](#Delete-all-categories)
 
 ### Register
 
@@ -665,6 +667,186 @@ Authorization: Bearer YOUR_TOKEN
         "code": 404,
         "details": "Category not found."
     }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Retrieve a category
+
+**GET** `/mindreveal/api/v1/categories/:categoryId`
+
+#### Parameters
+
+- `categoryId` (string, required): ID of the category to retrieve.
+
+#### Response
+
+##### If category retrieved successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Category retrieved successfully.",
+    "data": /* category object */
+}
+```
+
+##### If category isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Category not found."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Delete a category
+
+**DELETE** `/mindreveal/api/v1/categories/:categoryId`
+
+#### Parameters
+
+- `categoryId` (string, required): ID of the category to delete.
+
+#### Response
+
+##### If category deleted successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Category deleted successfully."
+}
+```
+
+##### If category isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Category not found."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Delete all categories
+
+**DELETE** `/mindreveal/api/v1/categories`
+
+#### Response
+
+##### If categories deleted successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "<number_of_deleted_categories> categories deleted successfully."
 }
 ```
 
