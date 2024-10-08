@@ -879,3 +879,175 @@ Authorization: Bearer YOUR_TOKEN
     }
 }
 ```
+
+### Delete a thought from a category
+
+**PUT** `/mindreveal/api/v1/thoughts/:thoughtId/`
+
+#### Request body
+
+```json
+{
+    "categoryId": null
+}
+```
+
+#### Response
+
+##### If thought ID is missing:
+
+###### 400 Bad Request
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Thought ID is required."
+    }
+}
+```
+
+##### If category ID is missing:
+
+###### 400 Bad Request
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Category ID is required."
+    }
+}
+```
+
+##### If thought removed from category successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Thought deleted from this category successfully.",
+    "data": /* updated thought object */
+}
+```
+
+##### If thought isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Thought not found."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+### Add a thought to a cateogry
+
+**PUT** `/mindreveal/api/v1/thoughts/:thoughtId`
+
+#### Request body
+
+```json
+{
+    "category_id": /* category id */
+}
+```
+
+#### Response
+
+##### If thought id doesn't exist in the request body
+
+###### 400 Bad Request
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 400,
+        "details": "Thought ID is required."
+    }
+}
+```
+
+##### If thought isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Thought not found."
+    }
+}
+```
+
+##### If thought updated successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Thought updated successfully.",
+    "data": /* thought object */
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
