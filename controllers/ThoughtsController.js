@@ -1,3 +1,4 @@
+import category from "../models/category.js";
 import Thought from "../models/thought.js";
 import serverErrorsHandler from "./helper.js";
 
@@ -165,11 +166,46 @@ export default class ThoughtController {
         }
     }
 
-    static async addThoughtToCategory(request, response) {
-
-    }
-
     static async deleteThoughtFromCategory(request, response) {
-
+        try {
+            const { thoughtId } = request.params;
+            const { categoryId } = request.body;
+            if (!thoughtId) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Thought ID is required."
+                    }
+                });
+            }
+            if (!categoryId) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Category ID is required."
+                    }
+                });
+            }
+            try {
+                const updatedThought = await Thought.findByIdAndUpdate(
+                    thoughtId,
+                    {categoryId: null},
+                    { new: true }
+                );
+                response.status(200).json({
+                    "status": "success",
+                    "message": `Thought deleted from this category successfully.`,
+                    "data": updatedThought
+                });
+            } catch (error) {
+                serverErrorsHandler(response, error);
+            }
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }
     }
 }
