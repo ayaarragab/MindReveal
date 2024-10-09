@@ -1,19 +1,27 @@
-import User from "../models/user.js";
-import AuthController from "./AuthController.js";
-import serverErrorsHandler from "./helper.js";
-import bcrypt from "bcrypt";
+/**
+ * UserController Class
+ * Handles user registration and login functionalities.
+ */
 
-// Validation function
+/**
+ * Validation function for user registration and login.
+ * @param {Object} request - The incoming request object.
+ * @returns {boolean} - True if both username and password are provided, otherwise false.
+ */
 const validate = (request) => {
     const { username, password } = request.body;
-    return username && password; // Returns true if both fields exist, false otherwise
+    return username && password;
 };
 
+
 export default class UserController {
-    // Register Method
+    /**
+     * Registers a new user.
+     * @param {Object} request - The incoming request object containing user data.
+     * @param {Object} response - The outgoing response object to send back to the client.
+     */
     static async register(request, response) {
         try {
-            // Validate input
             const validateInput = validate(request);
             if (!validateInput) {
                 return response.status(400).json({
@@ -26,7 +34,6 @@ export default class UserController {
                 });
             }
 
-            // Check if username already exists
             const isExist = await User.findOne({ username: request.body.username });
             if (isExist) {
                 return response.status(400).json({
@@ -39,16 +46,13 @@ export default class UserController {
                 });
             }
 
-            // Hash the password before storing
             const hashedPassword = await AuthController.hashPassword(request.body.password);
-
-            // Create user
             const user = await User.create({ username: request.body.username, password: hashedPassword });
             const token = AuthController.createJWT(user);
 
             return response.status(200).json({
                 "status": "success",
-                "message": "You have registeres successfully.",
+                "message": "You have registered successfully.",
                 token,
                 "data": [user]
             });
@@ -58,10 +62,13 @@ export default class UserController {
         }
     }
 
-    // Signin Method
+    /**
+     * Logs in an existing user.
+     * @param {Object} request - The incoming request object containing user credentials.
+     * @param {Object} response - The outgoing response object to send back to the client.
+     */
     static async login(request, response) {
         try {
-            // Validate input
             const validateInput = validate(request);
             if (!validateInput) {
                 return response.status(400).json({
@@ -74,40 +81,34 @@ export default class UserController {
                 });
             }
 
-            // Find user
             const user = await User.findOne({ username: request.body.username });
-            
             if (!user) {
                 return response.status(401).json({
                     "status": "error",
                     "message": "An error occurred.",
                     "error": {
                         "code": 401,
-                        "details": "Invalid credentials, please try again "
-                        + "If you're new to the API, please register first!"
+                        "details": "Invalid credentials, please try again. If you're new to the API, please register first!"
                     }
                 });
             }
 
-            // Compare passwords
-            const isValid = bcrypt.compare(request.body.password, user.password);
-            
-            if (!isValid) {                
+            const isValid = await bcrypt.compare(request.body.password, user.password);
+            if (!isValid) {
                 return response.status(401).json({
                     "status": "error",
                     "message": "An error occurred.",
                     "error": {
                         "code": 401,
-                        "details": "Password is not correct"
+                        "details": "Password is not correct."
                     }
                 });
             }
 
-            // Generate JWT token
             const token = AuthController.createJWT(user);
             return response.status(200).json({
                 "status": "success",
-                "message": "You've logged in successfully",
+                "message": "You've logged in successfully.",
                 token,
                 "data": [user]
             });
