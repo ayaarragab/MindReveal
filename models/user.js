@@ -1,3 +1,14 @@
+/**
+ * @file userModel.js
+ * @brief User model schema for the MindReveal application.
+ * 
+ * This file defines the Mongoose schema for users, including validation 
+ * for the password and automatic hashing of the password before saving.
+ * 
+ * @note Passwords must be at least 8 characters long and contain 
+ * at least one uppercase letter, one lowercase letter, and one digit.
+ */
+
 import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 
