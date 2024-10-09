@@ -1,5 +1,5 @@
 /**
- * @file userModel.js
+ * @file user.js
  * @brief User model schema for the MindReveal application.
  * 
  * This file defines the Mongoose schema for users, including validation 

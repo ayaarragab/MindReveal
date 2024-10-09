@@ -1,3 +1,11 @@
+/**
+ * @file thought.js
+ * @brief Thought model schema for the MindReveal application.
+ * 
+ * This file defines the Mongoose schema for thoughts, which are associated
+ * with a user and can be categorized. Each thought contains content and 
+ * metadata such as creation date.
+ */
 import mongoose from 'mongoose';
 
 const thoughtModel = mongoose.Schema({

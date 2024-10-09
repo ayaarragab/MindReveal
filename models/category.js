@@ -1,3 +1,10 @@
+/**
+ * @file category.js
+ * @brief Category model schema for the MindReveal application.
+ * 
+ * This file defines the Mongoose schema for categories, which can hold
+ * multiple thoughts associated with a user.
+ */
 import mongoose from 'mongoose';
 
 const categoryModel = mongoose.Schema({
