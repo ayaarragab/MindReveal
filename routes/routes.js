@@ -31,6 +31,7 @@ router.post('/login', UserController.login); ///< Endpoint for user login.
  */
 router.post('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.addThought); ///< Add a new thought.
 router.get('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.getThoughts); ///< Retrieve all thoughts.
+router.get('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.getOneThought) ///< Retrieve one thought of a sepcific id.
 router.put('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.updateThought); ///< Update a specific thought.
 router.delete('/thoughts/:thoughtId', AuthMiddlewares.isAuthorized, ThoughtController.deleteThought); ///< Delete a specific thought.
 router.delete('/thoughts', AuthMiddlewares.isAuthorized, ThoughtController.deleteAllThoughts); ///< Delete all thoughts.

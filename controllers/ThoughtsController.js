@@ -75,6 +75,40 @@ export default class ThoughtController {
         }
     }
 
+    static async getOneThought(request, response) {
+        try {
+            const { thoughtId } = request.params;
+            if (!thoughtId) {
+                return response.status(400).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 400,
+                        "details": "Thought ID is required."
+                    }
+                });
+            }
+            const thought = await Thought.findById(thoughtId);
+            if (!thought) {
+                return response.status(404).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 404,
+                        "details": "Thought not found."
+                    }
+                });
+            }
+            response.status(200).json({
+                "status": "success",
+                "message": "Thought found successfully.",
+                "data": thought
+            });
+        } catch (error) {
+            serverErrorsHandler(response, error);
+        }
+    }
+
     /**
      * @function searchThoughts
      * @description Searches for thoughts based on a keyword.
