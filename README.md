@@ -62,6 +62,7 @@ Authorization: Bearer YOUR_TOKEN
 - [Retrieve a category](#Retrieve-a-category)
 - [Delete a category](#Delete-a-category)
 - [Delete all categories](#Delete-all-categories)
+- [Retrieve a specific thought](#Retrieve-a-specific-thought)
 
 ### Register
 
@@ -1065,6 +1066,74 @@ Authorization: Bearer YOUR_TOKEN
     "status": "success",
     "message": "Thought updated successfully.",
     "data": /* thought object */
+}
+```
+
+##### If server error:
+
+###### 500 Internal Server Error
+
+```json
+{
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+    }
+}
+```
+
+
+### Retrieve a specific thought
+
+**GET** `/mindreveal/api/v1/thoughts/:thoughtId`
+
+#### Parameters
+
+- `thoughtId` (string, required): The ID of the thought to retrieve.
+
+#### Response
+
+##### If thought retrieved successfully:
+
+###### 200 OK
+
+```json
+{
+    "status": "success",
+    "message": "Thought retrieved successfully.",
+    "data": /* thought object */
+}
+```
+
+##### If thought isn't found:
+
+###### 404 Not Found
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 404,
+        "details": "Thought not found."
+    }
+}
+```
+
+##### If user is not authorized to access this endpoint:
+
+###### 401 Unauthorized
+
+```json
+{
+    "status": "error",
+    "message": "An error occurred.",
+    "error": {
+        "code": 401,
+        "details": "You are not authorized to access this page!"
+    }
 }
 ```
 
