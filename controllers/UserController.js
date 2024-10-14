@@ -1,3 +1,7 @@
+import serverErrorsHandler from "./helper.js";
+import User from "../models/user.js";
+import AuthController from "./AuthController.js";
+import bcrypt from "bcrypt";
 /**
  * UserController Class
  * Handles user registration and login functionalities.
@@ -46,8 +50,7 @@ export default class UserController {
                 });
             }
 
-            const hashedPassword = await AuthController.hashPassword(request.body.password);
-            const user = await User.create({ username: request.body.username, password: hashedPassword });
+            const user = await User.create({ username: request.body.username, password: request.body.password });
             const token = AuthController.createJWT(user);
 
             return response.status(200).json({
