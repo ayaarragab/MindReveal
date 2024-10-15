@@ -7,7 +7,9 @@
  */
 
 import Thought from "../models/thought.js";
+import CategoryController from "./CategoryController.js";
 import serverErrorsHandler from "./helper.js";
+import Category from "../models/category.js";
 
 /**
  * @class ThoughtController
@@ -175,6 +177,26 @@ export default class ThoughtController {
                         "details": "Thought not found."
                     }
                 });
+            }
+            if (updateData && updateData.hasOwnProperty('category_id')) {
+                try {
+                    const category = await Category.findById(updateData.category_id);
+                    if (category) {
+                        category.thoughts.push(updatedThought._id);
+                        await category.save();
+                    } else {
+                        return response.status(404).json({
+                            "status": "error",
+                            "message": "Category not found.",
+                            "error": {
+                                "code": 404,
+                                "details": "The specified category does not exist."
+                            }
+                        });
+                    }
+                } catch (error) {
+                    serverErrorsHandler(response, error);
+                }
             }
             response.status(200).json({
                 "status": "success",
