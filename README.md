@@ -1,5 +1,9 @@
 # MindReveal-API
 MindReveal API helps users uncover and organize their inner thoughts effortlessly. With features like user authentication, thought submission, manual categorization and search functionality, it makes you transform complex ideas into structured insights. Built with Node.js, Express.js, and MongoDB.
+
+## Video Demo
+[Watch the video demo here](https://www.youtube.com/watch?v=GlzCjF3pgh8)
+
 ## How to Run the App
 
 To run the MindReveal API, follow these steps:
@@ -32,6 +36,7 @@ To run the MindReveal API, follow these steps:
     Open your browser or API client and navigate to `http://localhost:3000/mindreveal/api/v1`.
 
 Now you can start using the MindReveal API to manage your thoughts and categories.
+
 ## Table of Contents
 
 - [Authentication](#authentication)
