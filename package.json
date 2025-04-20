@@ -43,6 +43,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
-    "@types/node": "^22.7.4"
+    "@types/node": "^22.7.4",
+    "vite": "^6.3.2"
   }
 }
