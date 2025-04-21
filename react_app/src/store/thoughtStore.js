@@ -15,7 +15,7 @@ export const useThoughtStore = create((set, get) => ({
       const response = await api.thoughts.getAll(page);
       
       set({
-        thoughts: response.data,
+        thoughts: response.data.slice(0, 3),
         currentPage: page,
         isLoading: false,
       });

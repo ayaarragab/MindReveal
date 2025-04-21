@@ -1,12 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useThoughtStore } from "@/store/thoughtStore";
 import { ThoughtCard } from "./ThoughtCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { cardStyle } from "../../assets/styleObjects"
+import { CreateThought } from "./CreateThought";
 
 export function ThoughtList() {
+  const [isAdd, setIsAdd] = useState(false);
   const {
     thoughts,
     isLoading,
@@ -17,8 +19,8 @@ export function ThoughtList() {
     searchThoughts,
   } = useThoughtStore();
   const { toast } = useToast();
-  const [searchQuery, setSearchQuery] = React.useState("");
-
+  const [searchQuery, setSearchQuery] = useState("");
+  
   useEffect(() => {
     fetchThoughts();
   }, []);
@@ -39,6 +41,13 @@ export function ThoughtList() {
         title: "Success",
         description: "Thought deleted successfully",
       });
+      
+      // Refresh the list after deletion
+      if (searchQuery.trim()) {
+        searchThoughts(searchQuery);
+      } else {
+        fetchThoughts(currentPage);
+      }
     } catch (error) {
       toast({
         variant: "destructive",
@@ -48,45 +57,77 @@ export function ThoughtList() {
     }
   };
 
+  const handleCreate = () => {
+    setIsAdd(!isAdd); // Toggle the isAdd state
+  };
+
+  const handleThoughtCreated = () => {
+    // Hide the create form after successful creation
+    setIsAdd(false);
+    // Refresh the thoughts list
+    fetchThoughts();
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="space-y-4" style={cardStyle}>
-      <form onSubmit={handleSearch} className="flex space-x-2">
-        <Input
-          type="search"
-          placeholder="Search thoughts..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Button type="submit">Search</Button>
-      </form>
+      {/* Only render CreateThought when isAdd is true */}
+      {isAdd ? (
+        <CreateThought onCreated={handleThoughtCreated} />
+      ) : (
+        <>
+          <form onSubmit={handleSearch} className="flex space-x-2">
+            
+            <Input
+              type="search"
+              placeholder="Search thoughts..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <Button type="submit" style={{margin: "20px"}}>Search</Button>
+          </form>
+          <h1 style={{fontSize: "2rem", textAlign:"left"}}>Your Thoughts</h1>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {thoughts.map((thought) => (
-          <ThoughtCard
-            key={thought.id}
-            thought={thought}
-            onDelete={handleDelete}
-          />
-        ))}
-      </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {thoughts.map((thought) => (
+              <ThoughtCard
+                key={thought._id}
+                thought={thought}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       <div className="flex justify-center space-x-2">
         <Button
-          onClick={() => fetchThoughts(currentPage - 1)}
-          disabled={currentPage === 1}
+          onClick={handleCreate}
+          style={{margin:"20px"}}
         >
-          Previous
+          {isAdd ? "Cancel" : "Add"}
         </Button>
-        <Button
-          onClick={() => fetchThoughts(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
+        {/* {!isAdd && (
+          <>
+            <Button
+              onClick={() => fetchThoughts(currentPage - 1)}
+              disabled={currentPage === 1}
+              style={{margin:"20px"}}
+            >
+              Previous
+            </Button>
+            <Button
+              onClick={() => fetchThoughts(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              style={{marginRight:"20px"}}
+            >
+              Next
+            </Button>
+          </>
+        )} */}
       </div>
     </div>
   );

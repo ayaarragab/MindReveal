@@ -13,22 +13,20 @@ export function ThoughtCard({ thought, onEdit, onDelete }) {
       transition={{ duration: 0.2 }}
     >
       <Card className="w-full">
-        <CardHeader className="flex flex-row items-center justify-between">
-          <h3 className="text-lg font-semibold">{thought.title}</h3>
-          <div className="flex space-x-2">
-            <Button variant="ghost" size="icon" onClick={() => onEdit(thought)}>
+        <CardContent style={{display:"flex"}}>
+        <div className="flex space-x-2">
+            {/* <Button variant="ghost" size="icon" onClick={() => onEdit(thought)}>
               <Edit className="h-4 w-4" />
-            </Button>
+            </Button> */}
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => onDelete(thought.id)}
+              onClick={() => onDelete(thought._id)}
+              style={{ padding:"5px", marginTop:"10px", marginRight:"10px"}}
             >
-              <Trash className="h-4 w-4" />
+              <Trash style={{width:"20px", height:"20px"}} />
             </Button>
           </div>
-        </CardHeader>
-        <CardContent>
           <p className="text-sm text-gray-600">{thought.content}</p>
         </CardContent>
         <CardFooter>

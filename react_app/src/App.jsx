@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { ThoughtList } from "@/components/thoughts/ThoughtList";
@@ -30,7 +29,7 @@ function App() {
                 </PrivateRoute>
               }
             />
-            <Route path="/" element={<Navigate to="/dashboard" />} />
+            <Route path="/" element={<Navigate to="/welcome" />} />
           </Routes>
         </div>
         <Toaster />
