@@ -26,8 +26,13 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
+  justify-content: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.345), black), url('../public/MindReveal.png');
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: center;
 }
 
 h1 {
@@ -65,4 +70,8 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
 }

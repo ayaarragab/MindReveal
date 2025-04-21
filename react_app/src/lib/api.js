@@ -46,9 +46,9 @@ export const api = {
       }),
   },
   thoughts: {
-    getAll: () =>
-      fetchWithAuth(`/thoughts`),
-    search: (query, page = 1, limit = 10) => 
+    getAll: (page = 1, limit = 4) =>
+      fetchWithAuth(`/thought/search?keyword=${""}&page=${page}&limit=${limit}`),
+    search: (query, page = 1, limit = 4) => 
       fetchWithAuth(`/thoughts/search?keyword=${query}&page=${page}&limit=${limit}`),
     create: (thought) =>
       fetchWithAuth('/thoughts', {

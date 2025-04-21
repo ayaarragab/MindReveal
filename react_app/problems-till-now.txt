@@ -1,0 +1,22 @@
+1- There's no register functionality in the UI
+2- There's no logout functionality in the UI
+3- When password is incorrect in login it doesn't display anything
+4- invalid password in registeration gives:
+    ```
+    {
+    "status": "error",
+    "message": "An internal server error occurred.",
+    "error": {
+        "code": 500,
+        "details": "Please try again later."
+        }
+    }
+    ```
+5- Editing Thought functionality is not working
+6- Deleting Thought functionality is not working
+7- Serching functionality is not working
+8- When I give a Thought a category_id it's not added to this category (What works is that 
+    after I already add the Thought, i can update its categoryId, but I can't add it to a
+    cateogry from the begining)
+9- I don't want all thoughts to appear in the page so I'll have to fix search even for 
+    getting all thoughts in dashboard

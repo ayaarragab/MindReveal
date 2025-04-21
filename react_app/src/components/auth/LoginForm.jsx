@@ -7,6 +7,13 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { Card, CardHeader, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 
+const styleObj = {
+  display:"flex",
+  flexDirection:"Column",
+  alignItems: "Center",
+  justifyContent:"Center",
+}
+
 export function LoginForm() {
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const login = useAuthStore((state) => state.login);
@@ -32,12 +39,18 @@ export function LoginForm() {
   };
 
   return (
-    <Card className="w-[350px]">
+    <Card className="w-[500px]" style={styleObj}>
       <CardHeader>
-        <CardTitle>Login</CardTitle>
+        <CardTitle style={{textAlign:"Center", fontSize:"1.4rem"}}>Login</CardTitle>
       </CardHeader>
-      <form onSubmit={handleSubmit}>
-        <CardContent className="space-y-4">
+      <form onSubmit={handleSubmit} style={{
+  display:"flex",
+  flexDirection:"Column",
+  alignItems: "Center",
+  justifyContent:"Center",
+}
+}>
+        <CardContent className="space-y-4" style={styleObj}>
           <div className="space-y-2">
             <Input
               type="username"
