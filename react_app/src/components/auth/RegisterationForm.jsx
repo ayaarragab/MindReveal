@@ -9,9 +9,9 @@ import { centerObj } from "../../assets/styleObjects";
 import { cardStyle } from "../../assets/styleObjects";
 
 
-export function LoginForm() {
-  const [credentials, setCredentials] = useState({ username: "", password: "" });
-  const login = useAuthStore((state) => state.login);
+export const RegisterationForm = () => {
+  const [credentials, setCredentials] = useState({ username: "", password: ""});
+  const login = useAuthStore((state) => state.register);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -21,7 +21,7 @@ export function LoginForm() {
       await login(credentials);
       toast({
         title: "Success",
-        description: "Logged in successfully!",
+        description: "Registered successfully!",
       });
       navigate("/dashboard");
     } catch (error) {
@@ -36,7 +36,7 @@ export function LoginForm() {
   return (
     <Card className="w-[500px]" style={cardStyle}>
       <CardHeader>
-        <CardTitle style={{textAlign:"Center", fontSize:"2rem"}}>Welcome!</CardTitle>
+        <CardTitle style={{textAlign:"Center", fontSize:"1.4rem"}}>Welcome!</CardTitle>
       </CardHeader>
       <form onSubmit={handleSubmit} style={{
   display:"flex",
@@ -70,10 +70,8 @@ export function LoginForm() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button style={{
-            width: "300px"
-          }} type="submit" className="w-full">
-            Login
+          <Button type="submit" className="w-full">
+            Register
           </Button>
         </CardFooter>
       </form>

@@ -20,3 +20,4 @@
     cateogry from the begining)
 9- I don't want all thoughts to appear in the page so I'll have to fix search even for 
     getting all thoughts in dashboard
+10- Handle case if user opened dashboard url and he's not signed in

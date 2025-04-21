@@ -1,10 +1,12 @@
 
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { LoginForm } from "@/components/auth/LoginForm";
 import { ThoughtList } from "@/components/thoughts/ThoughtList";
 import { useAuthStore } from "@/store/authStore";
 import { Toaster } from "@/components/ui/toaster";
+import { RegisterOrLogin } from "./components/ui/RegisterOrLogin";
+import { LoginForm } from "./components/auth/LoginForm";
+import { RegisterationForm } from "./components/auth/RegisterationForm";
 
 function PrivateRoute({ children }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -17,7 +19,9 @@ function App() {
       <div className="min-h-screen bg-background">
         <div className="container mx-auto py-8">
           <Routes>
+            <Route path="/welcome" element={<RegisterOrLogin />} />
             <Route path="/login" element={<LoginForm />} />
+            <Route path="/register" element={<RegisterationForm />} />
             <Route
               path="/dashboard"
               element={
