@@ -1,4 +1,10 @@
-1- There's no register functionality in the UI
+هعمل ايه بالظبط بالترتيب:
+- الأول هشتغل على الfunctionalities الأساسية الي في الendpoints انها تشتغل صح في الموقع
+- تاني حاجة error handlling و اtest كل حاجة
+- تالت حاجة الauthorization
+- رابع حاجة ان الerror mesages تظهر صح
+
+DONE((1- There's no register functionality in the UI))
 2- There's no logout functionality in the UI
 3- When password is incorrect in login it doesn't display anything
 4- invalid password in registeration gives:

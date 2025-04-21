@@ -7,12 +7,12 @@ export const useThoughtStore = create((set, get) => ({
   isLoading: false,
   error: null,
   currentPage: 1,
+  totalPages: 1,
 
   fetchThoughts: async (page = 1) => { // retrieve thoughts worked
     set({ isLoading: true });
     try {
       const response = await api.thoughts.getAll(page);
-      console.log(response);
       
       set({
         thoughts: response.data,
@@ -29,7 +29,7 @@ export const useThoughtStore = create((set, get) => ({
     try {
       const response = await api.thoughts.search(query, page);
       set({
-        thoughts: response.thoughts,
+        thoughts: response.data,
         currentPage: page,
         totalPages: response.totalPages,
         isLoading: false,

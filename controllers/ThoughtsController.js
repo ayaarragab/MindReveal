@@ -121,7 +121,8 @@ export default class ThoughtController {
      */
     static async searchThoughts(request, response) {
         try {
-            const { keyword, page = 1, limit = 10 } = request.query;
+            const { keyword, page = 1, limit = 5 } = request.query;
+            
             const searchQuery = {};
             if (keyword) {
                 searchQuery.$text = { $search: keyword };

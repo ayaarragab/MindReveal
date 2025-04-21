@@ -14,7 +14,7 @@ async function fetchWithAuth(endpoint, options = {}) {
     'Content-Type': 'application/json',
     ...(token && { Authorization: `Bearer ${token}` }),
   };
-
+  
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {    
     ...options,
     headers: {
@@ -22,7 +22,7 @@ async function fetchWithAuth(endpoint, options = {}) {
       ...options.headers,
     },
   });
-
+  
   if (!response.ok) {
     
     const error = await response.text();
@@ -47,9 +47,9 @@ export const api = {
   },
   thoughts: {
     getAll: (page = 1, limit = 4) =>
-      fetchWithAuth(`/thought/search?keyword=${""}&page=${page}&limit=${limit}`),
+      fetchWithAuth(`/thoughts`,{page , limit}),
     search: (query, page = 1, limit = 4) => 
-      fetchWithAuth(`/thoughts/search?keyword=${query}&page=${page}&limit=${limit}`),
+      fetchWithAuth(`/thoughts/search?keyword=${query}`, {page, limit}),
     create: (thought) =>
       fetchWithAuth('/thoughts', {
         method: 'POST',

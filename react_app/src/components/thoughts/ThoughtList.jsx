@@ -1,10 +1,10 @@
-
 import React, { useEffect } from "react";
 import { useThoughtStore } from "@/store/thoughtStore";
 import { ThoughtCard } from "./ThoughtCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
+import { cardStyle } from "../../assets/styleObjects"
 
 export function ThoughtList() {
   const {
@@ -53,7 +53,7 @@ export function ThoughtList() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" style={cardStyle}>
       <form onSubmit={handleSearch} className="flex space-x-2">
         <Input
           type="search"
