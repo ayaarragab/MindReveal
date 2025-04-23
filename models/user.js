@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema({
         },
         message: passwordNotValid => `${passwordNotValid.value} is not a valid password!`
     } },
+    refresh_token: { type: String, default: null },
     created_at: { type: Date, default: Date.now }
 })
 

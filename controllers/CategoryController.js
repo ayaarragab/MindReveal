@@ -7,7 +7,7 @@
  */
 
 import Category from "../models/category.js";
-import serverErrorsHandler from "./helper.js";
+import serverErrorsHandler from "../utils/helper.js";
 
 export default class CategoryController {
     /**

@@ -8,7 +8,7 @@
 
 import Thought from "../models/thought.js";
 import CategoryController from "./CategoryController.js";
-import serverErrorsHandler from "./helper.js";
+import serverErrorsHandler from "../utils/helper.js";
 import Category from "../models/category.js";
 
 /**

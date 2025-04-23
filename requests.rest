@@ -1,0 +1,21 @@
+POST http://localhost:3000/mindreveal/api/v1/login
+Content-Type: application/json
+
+{
+    "username": "rayaaaaaaarr",
+    "password": "123aaaAA@"
+}
+
+###
+
+GET http://localhost:3000/mindreveal/api/v1/thoughts
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiOWU1ZmRhZTk3NzAzZGEzNjNmNTkzMjIyNjg1MjczZTY6NGQ2OGVmZWZjMDY2ZDhhYmE4NmY0YTAyY2Q2YTM5OWU3ZGRjZGNiOTNiOTRkYTlhNjYyZGZhMzE5ZjcyODBlZWFmMzY3ZGE0ODNjNGZjN2MyODBhNzY5NjIwOGJkNDNhIiwiaWF0IjoxNzQ1Mzk2NzkxLCJleHAiOjE3NDUzOTY4MDZ9.m4O8e8uFkGcHb0xoabIiB2xvjQBav4_-J_FlHtlwCRU
+###
+
+
+POST http://localhost:3000/mindreveal/api/v1/token
+Content-Type: application/json
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDhhNmE0NmY4ZDY3MGJlNzQ1NDEyZSIsImlhdCI6MTc0NTM5NzQxM30.Y8aFSsS8J1YBa8vqDX-mMQ0S1Be94DEJKfTwcWQcW4w"
+}
