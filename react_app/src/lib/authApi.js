@@ -23,4 +23,9 @@ export const authApi = {
       throw new ApiError(error.message, error.status);
     }
   },
+
+  logout: () => {
+    localStorage.removeItem('access-token');
+    localStorage.removeItem('refresh-token');
+  }
 };

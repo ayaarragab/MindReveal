@@ -61,7 +61,7 @@ export function CreateThought() {
         <CardFooter>
           <Button style={{
             width: "300px"
-          }} type="submit" className="w-full">
+          }} type="submit" className="w-full"z>
             Add
           </Button>
         </CardFooter>

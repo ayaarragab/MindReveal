@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
 import { cardStyle } from "../../assets/styleObjects"
 import { CreateThought } from "./CreateThought";
+import { authApi } from "../../lib/authApi.js"
 
 export function ThoughtList() {
   const [isAdd, setIsAdd] = useState(false);
@@ -110,24 +111,17 @@ export function ThoughtList() {
         >
           {isAdd ? "Cancel" : "Add"}
         </Button>
-        {/* {!isAdd && (
           <>
             <Button
-              onClick={() => fetchThoughts(currentPage - 1)}
-              disabled={currentPage === 1}
-              style={{margin:"20px"}}
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={() => fetchThoughts(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              onClick={() => {
+                 authApi.logout();
+                window.location.href = "/welcome";
+                }}
               style={{marginRight:"20px"}}
             >
-              Next
+              Logout
             </Button>
           </>
-        )} */}
       </div>
     </div>
   );
