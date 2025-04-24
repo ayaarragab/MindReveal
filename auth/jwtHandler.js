@@ -36,7 +36,7 @@ export const createTokens = (user) => {
     const accessToken = jwt.sign(
         { data: encrypt(JSON.stringify({ id: user._id })) },
         process.env.JWT_SECRET,
-        { expiresIn: "15s" }
+        { expiresIn: "5s" }
     );
 
     const refreshToken = createRefreshToken(user);
@@ -69,7 +69,6 @@ export async function verifyAToken(token) {
             if (user) return user;
         }
     } catch (error) {
-        
         console.log("Invalid or tampered token:", error.message);
     }
     return false;

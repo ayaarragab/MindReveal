@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { api } from '@/lib/api';
+import { authApi } from '@/lib/authApi';
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -10,7 +10,7 @@ export const useAuthStore = create((set) => ({
   login: async (credentials) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.auth.login(credentials);
+      const response = await authApi.login(credentials);
       localStorage.setItem('access-token', response.accessToken);
       localStorage.setItem('refresh-token', response.refreshToken);
       
@@ -25,7 +25,7 @@ export const useAuthStore = create((set) => ({
   register: async (userData) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await api.auth.register(userData);
+      const response = await authApi.register(userData);
       localStorage.setItem('access-token', response.accessToken);
       localStorage.setItem('refresh-token', response.refreshToken);
       set({ user: response.user, isAuthenticated: true, isLoading: false });
@@ -43,7 +43,7 @@ export const useAuthStore = create((set) => ({
 
   getToken: async (refreshToken) => {
     try {
-      const response = await api.auth.getNewAccessToken();
+      const response = await authApi.getNewAccessToken();
       localStorage.setItem('access-token', response.accessToken);
       localStorage.setItem('refresh-token', response.refreshToken);
       set({ user: response.user, isAuthenticated: true, isLoading: false });

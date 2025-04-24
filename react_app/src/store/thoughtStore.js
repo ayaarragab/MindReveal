@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { api } from '@/lib/api';
+import { thoughtsApi } from '@/lib/thoughtsApi';
 
 export const useThoughtStore = create((set, get) => ({
   thoughts: [],
@@ -12,7 +12,7 @@ export const useThoughtStore = create((set, get) => ({
   fetchThoughts: async (page = 1) => { // retrieve thoughts worked
     set({ isLoading: true });
     try {
-      const response = await api.thoughts.getAll(page);
+      const response = await thoughtsApi.getAll(page);
       
       set({
         thoughts: response.data.slice(0, 3),
@@ -27,7 +27,7 @@ export const useThoughtStore = create((set, get) => ({
   searchThoughts: async (query, page = 1) => {
     set({ isLoading: true });
     try {
-      const response = await api.thoughts.search(query, page);
+      const response = await thoughtsApi.search(query, page);
       set({
         thoughts: response.data,
         currentPage: page,
@@ -41,7 +41,7 @@ export const useThoughtStore = create((set, get) => ({
 
   createThought: async (thought) => {
     try {
-      const response = await api.thoughts.create(thought);
+      const response = await thoughtsApi.create(thought);
       set((state) => ({
         thoughts: [response, ...state.thoughts],
       }));
@@ -54,7 +54,7 @@ export const useThoughtStore = create((set, get) => ({
 
   updateThought: async (id, thought) => {
     try {
-      const response = await api.thoughts.update(id, thought);
+      const response = await thoughtsApi.update(id, thought);
       set((state) => ({
         thoughts: state.thoughts.map((t) =>
           t.id === id ? response : t
@@ -69,7 +69,7 @@ export const useThoughtStore = create((set, get) => ({
 
   deleteThought: async (id) => {
     try {
-      await api.thoughts.delete(id);
+      await thoughtsApi.delete(id);
       set((state) => ({
         thoughts: state.thoughts.filter((t) => t.id !== id),
       }));
@@ -79,13 +79,13 @@ export const useThoughtStore = create((set, get) => ({
     }
   },
 
-  fetchCategories: async () => {
-    set({ isLoading: true });
-    try {
-      const response = await api.categories.getAll();
-      set({ categories: response, isLoading: false });
-    } catch (error) {
-      set({ error: error.message, isLoading: false });
-    }
-  },
+  // fetchCategories: async () => {
+  //   set({ isLoading: true });
+  //   try {
+  //     const response = await api.categories.getAll();
+  //     set({ categories: response, isLoading: false });
+  //   } catch (error) {
+  //     set({ error: error.message, isLoading: false });
+  //   }
+  // },
 }));

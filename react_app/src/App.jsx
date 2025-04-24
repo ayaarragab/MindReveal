@@ -9,6 +9,8 @@ import { RegisterationForm } from "./components/auth/RegisterationForm";
 
 function PrivateRoute({ children }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  console.log(isAuthenticated);
+  
   return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
