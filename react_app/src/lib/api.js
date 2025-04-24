@@ -8,11 +8,11 @@ class ApiError extends Error {
 }
 
 async function fetchWithAuth(endpoint, options = {}) {
-  const token = localStorage.getItem('token');
+  const accessToken = localStorage.getItem('access-token');
   
   const defaultHeaders = {
     'Content-Type': 'application/json',
-    ...(token && { Authorization: `Bearer ${token}` }),
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
   };
   
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {    
@@ -22,14 +22,15 @@ async function fetchWithAuth(endpoint, options = {}) {
       ...options.headers,
     },
   });
-  
-  if (!response.ok) {
+  const responseToJson = await response.json();
+  // if (!response.ok) {
     
-    const error = await response.text();
-    throw new ApiError(error, response.status);
-  }
+  //   const error = await response.text();
+  //   throw new ApiError(error, response.status);
+  // }
+  console.log(responseToJson);
   
-  return response.json();
+  return responseToJson;
 }
 
 export const api = {
@@ -44,6 +45,11 @@ export const api = {
         method: 'POST',
         body: JSON.stringify(userData),
       }),
+    getNewAccessToken: (refreshToken) => 
+      fetchWithAuth('/token', {
+        method: 'POST',
+        body: JSON.stringify(refreshToken),
+      })
   },
   thoughts: {
     getAll: (page = 1, limit = 4) =>

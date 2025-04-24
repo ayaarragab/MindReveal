@@ -42,7 +42,7 @@ export const authenticate = async(request, response, next) => {
                     "status": "error",
                     "message": "An error occurred.",
                     "error": {
-                        "code": 400,
+                        "code": 408,
                         "details": "Invalid or expired token"
                     }
                 });
