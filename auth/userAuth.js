@@ -158,19 +158,18 @@ export async function getToken(request, response) {
         });       
     }
     try {
-        const user = verifyRToken(refreshToken);
-        if (user) {
-
-            
+        const user = await verifyRToken(refreshToken);
+        
+        if (user) {           
             request.user = user;
             const tokens = createTokens(user);
+            
             return response.status(200).json({
                 "status": "success",
                 "message": "Access token generated successfully",
                 ...tokens
             });
             } else {
-            console.log("are you here?");
             return response.status(400).json({
                 "status": "error",
                 "message": "An error occurred.",

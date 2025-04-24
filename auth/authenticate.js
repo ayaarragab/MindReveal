@@ -36,25 +36,18 @@ export const authenticate = async(request, response, next) => {
                 if (user) {
                     request.user = user;
                     next();
-                } else {
+                } else {                    
                     return response.status(401).json({
                         "status": "error",
                         "message": "An error occurred.",
                         "error": {
-                            "code": 408,
+                            "code": 401,
                             "details": "Invalid or expired token"
                         }
                     });
                 }
             } catch (error) {
-                return response.status(401).json({
-                    "status": "error",
-                    "message": "An error occurred.",
-                    "error": {
-                        "code": 401,
-                        "details": "Invalid or expired token"
-                    }
-                });
+                serverErrorsHandler(response, error);
             }
         } catch (error) {
             serverErrorsHandler(response, error);
