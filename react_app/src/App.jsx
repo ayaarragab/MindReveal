@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { RegisterOrLogin } from "./components/ui/RegisterOrLogin";
 import { LoginForm } from "./components/auth/LoginForm";
 import { RegisterationForm } from "./components/auth/RegisterationForm";
+import AdminUserDashboard from "./components/admin/UsersDashboard";
 
 function PrivateRoute({ children }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -22,15 +23,28 @@ function App() {
             <Route path="/welcome" element={<RegisterOrLogin />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterationForm />} />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <ThoughtList />
-                </PrivateRoute>
-              }
-            />
-            <Route path="/" element={<Navigate to="/welcome" />} />
+    {localStorage.getItem('role') ? (
+      <Route
+        path="/admin-dashboard"
+        element={
+          <PrivateRoute>
+            <AdminUserDashboard />
+          </PrivateRoute>
+        }
+      />
+    ) : (
+      <>
+        <Route
+          path="/dashboard"
+          element={
+            <PrivateRoute>
+              <ThoughtList />
+            </PrivateRoute>
+          }
+        />
+        <Route path="/" element={<Navigate to="/welcome" />} />
+      </>
+    )}
           </Routes>
         </div>
         <Toaster />
