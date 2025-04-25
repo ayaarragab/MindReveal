@@ -24,11 +24,7 @@ axiosInstance.interceptors.request.use(
 
     const accessToken = localStorage.getItem('access-token');
     const IsRole = localStorage.getItem('role')    
-    if (IsRole) {
-      if (!config.data.role) {
-        config.data.role =  IsRole; 
-      }
-    }
+      console.log(typeof config.data);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }

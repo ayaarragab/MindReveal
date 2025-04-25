@@ -32,7 +32,6 @@ export const authenticate = async(request, response, next) => {
             }
 
             try {
-                console.log(isAdmin);
                 
                 const user = await verifyAToken(token, isAdmin);
 

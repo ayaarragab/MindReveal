@@ -14,7 +14,18 @@ function PrivateRoute({ children }) {
   return isAuthenticated ? children : <Navigate to="/login" />;
 }
 
+function DashboardRouter() {
+  const role = localStorage.getItem("role");
+
+  if (role === "admin") {
+    return <AdminUserDashboard />;
+  } else {
+    return <ThoughtList />;
+  }
+}
+
 function App() {
+
   return (
     <Router>
       <div className="min-h-screen bg-background">
@@ -23,28 +34,15 @@ function App() {
             <Route path="/welcome" element={<RegisterOrLogin />} />
             <Route path="/login" element={<LoginForm />} />
             <Route path="/register" element={<RegisterationForm />} />
-    {localStorage.getItem('role') ? (
-      <Route
-        path="/admin-dashboard"
-        element={
-          <PrivateRoute>
-            <AdminUserDashboard />
-          </PrivateRoute>
-        }
-      />
-    ) : (
-      <>
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <ThoughtList />
-            </PrivateRoute>
-          }
-        />
-        <Route path="/" element={<Navigate to="/welcome" />} />
-      </>
-    )}
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <DashboardRouter />
+                </PrivateRoute>
+              }
+            />
+            <Route path="/" element={<Navigate to="/welcome" />} />
           </Routes>
         </div>
         <Toaster />

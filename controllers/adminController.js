@@ -8,7 +8,7 @@ export const getUsers = async (_, response) => {
             response.status(200).json({
                 status: "success",
                 message: "Here's all users",
-                data: users
+                data: [users]
         });
     }
     } catch (error) {

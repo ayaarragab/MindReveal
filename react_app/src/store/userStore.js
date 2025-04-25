@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-
+import { usersApi } from "../../src/lib/usersApi";
 export const useUsersStore = create((set) => ({
     users: [],
     isLoading: false,

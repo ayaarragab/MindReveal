@@ -2,6 +2,8 @@ export const authorize = (request, response, next) => {
     if (request.body.role !== undefined) {
         next();
     } else {
+        console.log("here");
+        
         return response.status(401).json({
             "status": "error",
             "message": "An error occurred.",

@@ -7,9 +7,12 @@ import { useToast } from "@/components/ui/use-toast";
 import { Card, CardHeader, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { centerObj } from "../../assets/styleObjects";
 import { cardStyle } from "../../assets/styleObjects";
-
+import { useEffect } from "react";
 
 export function LoginForm() {
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const login = useAuthStore((state) => state.login);
   const navigate = useNavigate();
