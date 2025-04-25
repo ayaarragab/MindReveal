@@ -21,10 +21,14 @@ const processFailedRequests = (token) => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
+
     const accessToken = localStorage.getItem('access-token');
-    
-    console.log("old token\n" + accessToken + "\n" + new Date().toISOString());
-    
+    const IsRole = localStorage.getItem('role')    
+    if (IsRole) {
+      if (!config.data.role) {
+        config.data.role =  IsRole; 
+      }
+    }
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -63,9 +67,12 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // Use axiosInstance instead of axios to maintain baseURL and interceptors
-        const response = await axiosInstance.post('/token', { refreshToken });
         
+        // Use axiosInstance instead of axios to maintain baseURL and interceptors
+        if (localStorage.getItem('role')) {
+          await axiosInstance.post('/token', { refreshToken, role: localStorage.getItem('role') });
+        } else
+          await axiosInstance.post('/token', { refreshToken });
         const newAccessToken = response.accessToken;
         localStorage.setItem('access-token', newAccessToken);
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;

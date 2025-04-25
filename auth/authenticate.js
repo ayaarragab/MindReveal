@@ -1,12 +1,13 @@
 import serverErrorsHandler from "../utils/helper.js";
-import { verifyAToken } from "./jwtHandler.js";
+import { verifyAToken, verifyRToken, createTokens } from "./jwtHandler.js";
 
 
 export const authenticate = async(request, response, next) => {
         try {
             const bearer = request.headers.authorization;
+            const isAdmin = request.body.role !== undefined;
 
-            if (!bearer) {
+            if (!bearer) {                
                 return response.status(401).json({
                     "status": "error",
                     "message": "An error occurred.",
@@ -31,7 +32,9 @@ export const authenticate = async(request, response, next) => {
             }
 
             try {
-                const user = await verifyAToken(token);
+                console.log(isAdmin);
+                
+                const user = await verifyAToken(token, isAdmin);
 
                 if (user) {
                     request.user = user;
@@ -54,3 +57,50 @@ export const authenticate = async(request, response, next) => {
         }
 }
 
+export async function getToken(request, response) {
+    const refreshToken = request.body.refreshToken;
+    const isAdmin = request.body.role !== undefined;
+    
+    if (!refreshToken) {
+        return response.status(401).json({
+            "status": "error",
+            "message": "An error occurred.",
+            "error": {
+                "code": 402,
+                "details": "You have to send the refresh token to gain access token"
+            }
+        });       
+    }
+    try {
+        
+        const user = await verifyRToken(refreshToken, isAdmin);
+        
+        if (user) {
+            request.user = user;
+            const tokens = createTokens(user);
+            return response.status(200).json({
+                "status": "success",
+                "message": "Access token generated successfully",
+                ...tokens
+            });
+            } else {
+            return response.status(400).json({
+                "status": "error",
+                "message": "An error occurred.",
+                "error": {
+                    "code": 400,
+                    "details": "Invalid refresh token"
+                }
+            })            
+        }
+    } catch (error) {
+        return response.status(400).json({
+            "status": "error",
+            "message": "An error occurred.",
+            "error": {
+                "code": 400,
+                "details": "Invalid refresh token"
+            }
+        });
+    }
+}

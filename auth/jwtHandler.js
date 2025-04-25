@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import User from "../models/user.js";
+import Admin from "../models/admin.js";
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -53,14 +54,21 @@ const createRefreshToken = (user) => {
 }
 
 
-export async function verifyAToken(token) {
+export async function verifyAToken(token, isAdmin) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if (decoded?.data) {
             const decrypted = decrypt(decoded.data);
             const { id } = JSON.parse(decrypted);
-            const user = await User.findById(id);
-            if (user) return user;
+            
+            if (isAdmin) {
+                const admin = await Admin.findById(id);
+                
+                if (admin) return admin;   
+            } else {
+                const user = await User.findById(id);
+                if (user) return user;
+            }
         }
     } catch (error) {
         
@@ -68,14 +76,22 @@ export async function verifyAToken(token) {
     }
     return false;
 }
-export async function verifyRToken(token) {
+export async function verifyRToken(token, isAdmin) {
     try {
         const decoded = jwt.verify(token, process.env.RJWT_SECRET_KEY);
+
         if (decoded?.data) {
+            
             const decrypted = decrypt(decoded.data);
             const { id } = JSON.parse(decrypted);
-            const user = await User.findById(id);
-            if (user) return user;
+            
+            if (isAdmin) {                         
+                const admin = await Admin.findById(id);
+                if (admin) return admin;   
+            } else {
+                const user = await User.findById(id);
+                if (user) return user;
+            }
         }
     } catch (error) {        
         console.log("Invalid or tampered token:", error.message);

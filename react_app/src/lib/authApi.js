@@ -27,5 +27,8 @@ export const authApi = {
   logout: () => {
     localStorage.removeItem('access-token');
     localStorage.removeItem('refresh-token');
+    if (localStorage.getItem('role')) {
+      localStorage.removeItem('role');
+    }
   }
 };

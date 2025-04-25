@@ -10,6 +10,13 @@ class ApiError extends Error {
 export const thoughtsApi = {
   getAll: async (page = 1, limit = 4) => {
     try {
+      if (localStorage.getItem('role')) {
+        return await axiosInstance.get('/thoughts', { params: { page, limit },
+          body: {role: localStorage.getItem('role')}
+        });
+      } else {
+        return await axiosInstance.get('/thoughts', { params: { page, limit } });
+      }
       return await axiosInstance.get('/thoughts', { params: { page, limit } });
     } catch (error) {
       throw new ApiError(error.message, error.status);
@@ -18,9 +25,16 @@ export const thoughtsApi = {
   
   search: async (query, page = 1, limit = 4) => {
     try {
-      return await axiosInstance.get('/thoughts/search', { 
-        params: { keyword: query, page, limit } 
-      });
+      if (localStorage.getItem('role')) {
+        return await axiosInstance.get('/thoughts/search', { 
+          params: { keyword: query, page, limit },
+          body: {role: localStorage.getItem('role')}
+        });
+      } else {
+        return await axiosInstance.get('/thoughts/search', { 
+          params: { keyword: query, page, limit },
+        });
+      }
     } catch (error) {
       console.log("here");
       throw new ApiError(error.message, error.status);
@@ -29,7 +43,12 @@ export const thoughtsApi = {
   
   create: async (thought) => {
     try {
-      return await axiosInstance.post('/thoughts', thought);
+      if (localStorage.getItem('role')) {
+        return await axiosInstance.post('/thoughts', thought,
+         { body: {role: localStorage.getItem('role')} })
+      } else {
+        return await axiosInstance.post('/thoughts', thought);
+      }
     } catch (error) {
       throw new ApiError(error.message, error.status);
     }

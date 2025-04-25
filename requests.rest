@@ -2,14 +2,14 @@ POST http://localhost:3000/mindreveal/api/v1/login
 Content-Type: application/json
 
 {
-    "username": "rayaaaaaaarr",
+    "username": "admin.Ayaa3",
     "password": "123aaaAA@"
 }
 
 ###
 
 GET http://localhost:3000/mindreveal/api/v1/thoughts
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiOWU1ZmRhZTk3NzAzZGEzNjNmNTkzMjIyNjg1MjczZTY6NGQ2OGVmZWZjMDY2ZDhhYmE4NmY0YTAyY2Q2YTM5OWU3ZGRjZGNiOTNiOTRkYTlhNjYyZGZhMzE5ZjcyODBlZWFmMzY3ZGE0ODNjNGZjN2MyODBhNzY5NjIwOGJkNDNhIiwiaWF0IjoxNzQ1Mzk2NzkxLCJleHAiOjE3NDUzOTY4MDZ9.m4O8e8uFkGcHb0xoabIiB2xvjQBav4_-J_FlHtlwCRU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiYWViNmVmNDNkZGZkMzY1MDdlMmZiYTQ0YzY3NTc1Yjc6OTdjMWFkZTkzZTcxMjFmY2ZjNzcyY2U2Yzc3ODk2MzcwNWZiY2EyNTdlYmE0YWI2NTRmNzUyOTRhMmU1MTc1ZWJmN2JhNjhmZmFlOWQ2NmJiODlkNzg4MTE2MDhmODExIiwiaWF0IjoxNzQ1NTgzNzc5LCJleHAiOjE3NDU1ODM3OTR9.1gGYf8ZWoAazOsz8pwNK6OVpFwKapDf2Eg2A_KOpTl8
 ###
 
 
@@ -17,5 +17,6 @@ POST http://localhost:3000/mindreveal/api/v1/token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MDhhNmE0NmY4ZDY3MGJlNzQ1NDEyZSIsImlhdCI6MTc0NTM5NzQxM30.Y8aFSsS8J1YBa8vqDX-mMQ0S1Be94DEJKfTwcWQcW4w"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjoiNDYxNjExMjkzZDY2OTQzYmMzMjRmZjc3N2YyYzljMzc6YTc5Y2IzMjRmYTZmMzIxNzhmNDkzNTZiYjdiMDkwMjQ0NDg5ZDRkZTNhMzRlMGJiZDk0MGJkMGJhNDE2OWE5MTRhYWVkY2RkYzM5MGE3NGJiNDEzOGY3YjI0NDZhMGM5IiwiaWF0IjoxNzQ1NTgzNzc5fQ.uKOQCeMb9dI_HbvlpMZ8PUqg2Kulpm-HiPhswRgR4RU",
+    "role": "admin"
 }

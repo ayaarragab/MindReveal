@@ -8,11 +8,12 @@
 
 // Importing necessary modules
 import { Router } from "express"; ///< Importing Router from Express for route handling.
-import { register, login, getToken } from "../auth/userAuth.js"; ///< Importing UserController for user-related operations.
+import { register, login } from "../auth/auth.js"; ///< Importing UserController for user-related operations.
 import ThoughtController from "../controllers/ThoughtsController.js"; ///< Importing ThoughtController for thought-related operations.
-import { authenticate } from "../auth/authenticate.js"; ///< Importing authentication middlewares.
+import { authenticate, getToken } from "../auth/authenticate.js"; ///< Importing authentication middlewares.
 import CategoryController from "../controllers/CategoryController.js"; ///< Importing CategoryController for category-related operations.
-
+import { authorize } from "../auth/authorize.js";
+import { getUsers } from "../controllers/adminController.js";
 // Creating a new router instance
 const router = Router();
 
@@ -24,6 +25,15 @@ const router = Router();
 router.post('/register', register); ///< Endpoint for user registration.
 router.post('/login', login); ///< Endpoint for user login.
 router.post('/token', getToken)
+
+/**
+ * @section Admin Endpoints
+ * 
+ * This section handles operations related to admin.
+ */
+
+router.get('/users', authenticate, authorize, getUsers);
+
 /**
  * @section Thoughts Endpoints
  * 

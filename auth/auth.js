@@ -1,8 +1,8 @@
 import User from "../models/user.js";
-import { createTokens, verifyRToken } from "./jwtHandler.js";
+import Admin from "../models/admin.js";
+import { createTokens } from "./jwtHandler.js";
 import bcrypt from "bcrypt";
 import serverErrorsHandler from "../utils/helper.js";
-import { token } from "morgan";
 
 /**
  * Validation function for user registration and login.
@@ -19,7 +19,10 @@ const validate = (request) => {
  * @param {string} username - The username to search for.
  * @returns {Promise<Object|null>} - The user object if found, otherwise null.
  */
-async function findUserByUsername(username) {
+async function findUserByUsername(username, isAdmin) {
+    if (isAdmin) {
+        return await Admin.findOne({ username });
+    }
     return await User.findOne({ username });
 }
 
@@ -41,8 +44,9 @@ export async function register(request, response) {
                 }
             });
         }
-
-        const isExist = await findUserByUsername(request.body.username);
+        const username = request.body.username;
+        const isAdmin = username.includes('admin');
+        const isExist = await findUserByUsername(username, isAdmin);
         if (isExist) {
             return response.status(400).json({
                 "status": "error",
@@ -53,34 +57,55 @@ export async function register(request, response) {
                 }
             });
         }
-
-        // Create a new user in the database
-        const newUser = await User.create({ username: request.body.username, password: request.body.password });
-
-        // Ensure the user object is populated properly (e.g., password hashing is handled)
-        if (!newUser) {
-            return response.status(500).json({
-                "status": "error",
-                "message": "An error occurred.",
-                "error": {
-                    "code": 500,
-                    "details": "Failed to create user."
-                }
-            });
+        if (isAdmin) {
+            const newAdmin = await Admin.create({ username: request.body.username, password: request.body.password });
+            if (!newAdmin) {
+                return response.status(500).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 500,
+                        "details": "Failed to create admin."
+                    }
+                });
         }
+        const tokens = createTokens(newAdmin); // Use the `newUser` object here
 
-        // Create tokens after successful user creation
-        const tokens = createTokens(newUser); // Use the `newUser` object here
-
-        newUser.refreshToken = tokens.refreshToken;
-        await newUser.save();
+        newAdmin.refresh_token = tokens.refreshToken;
+        await newAdmin.save();
 
         return response.status(200).json({
             "status": "success",
             "message": "You have registered successfully.",
             tokens,
-            "data": [newUser]
+            "data": [newAdmin]
         });
+        } else {
+            const newUser = await User.create({ username: request.body.username, password: request.body.password });
+
+            // Ensure the user object is populated properly (e.g., password hashing is handled)
+            if (!newUser) {
+                return response.status(500).json({
+                    "status": "error",
+                    "message": "An error occurred.",
+                    "error": {
+                        "code": 500,
+                        "details": "Failed to create user."
+                    }
+                });
+            }
+            const tokens = createTokens(newUser); // Use the `newUser` object here
+
+            newUser.refreshToken = tokens.refreshToken;
+            await newUser.save();
+    
+            return response.status(200).json({
+                "status": "success",
+                "message": "You have registered successfully.",
+                tokens,
+                "data": [newUser]
+            });
+        }
 
     } catch (error) {
         serverErrorsHandler(response, error);
@@ -106,7 +131,10 @@ export async function login(request, response) {
             });
         }
 
-        const user = await findUserByUsername(request.body.username);
+        const username = request.body.username;
+        const isAdmin = username.includes('admin');
+
+        const user = await findUserByUsername(username, isAdmin);
         if (!user) {
             return response.status(401).json({
                 "status": "error",
@@ -142,51 +170,5 @@ export async function login(request, response) {
 
     } catch (error) {
         serverErrorsHandler(response, error);
-    }
-}
-
-export async function getToken(request, response) {
-    const { refreshToken } = request.body;
-    if (!refreshToken) {
-        return response.status(401).json({
-            "status": "error",
-            "message": "An error occurred.",
-            "error": {
-                "code": 402,
-                "details": "You have to send the refresh token to gain access token"
-            }
-        });       
-    }
-    try {
-        const user = await verifyRToken(refreshToken);
-        
-        if (user) {           
-            request.user = user;
-            const tokens = createTokens(user);
-            
-            return response.status(200).json({
-                "status": "success",
-                "message": "Access token generated successfully",
-                ...tokens
-            });
-            } else {
-            return response.status(400).json({
-                "status": "error",
-                "message": "An error occurred.",
-                "error": {
-                    "code": 400,
-                    "details": "Invalid refresh token"
-                }
-            })            
-        }
-    } catch (error) {
-        return response.status(400).json({
-            "status": "error",
-            "message": "An error occurred.",
-            "error": {
-                "code": 400,
-                "details": "Invalid refresh token"
-            }
-        });
     }
 }

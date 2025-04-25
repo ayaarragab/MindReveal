@@ -18,7 +18,10 @@ export function LoginForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(credentials);
+      const response = await login(credentials);
+      if (response.data[0].role) {
+        localStorage.setItem('role', response.data[0].role);
+      }
       toast({
         title: "Success",
         description: "Logged in successfully!",
