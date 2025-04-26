@@ -32,7 +32,7 @@ router.post('/token', getToken)
  * This section handles operations related to admin.
  */
 
-router.get('/users', authenticate, authorize, getUsers);
+router.post('/users', authenticate, authorize, getUsers);
 
 /**
  * @section Thoughts Endpoints

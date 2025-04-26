@@ -4,7 +4,7 @@ import serverErrorsHandler from "../utils/helper.js";
 export const getUsers = async (_, response) => {
     try {
         const users = await User.find({});
-        if (users) {
+        if (users) {            
             response.status(200).json({
                 status: "success",
                 message: "Here's all users",

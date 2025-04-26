@@ -1,14 +1,14 @@
 export const authorize = (request, response, next) => {
-    if (request.body.role !== undefined) {
+    
+    const role = request.body.role;
+    if (role !== undefined) {
         next();
     } else {
-        console.log("here");
-        
-        return response.status(401).json({
+        return response.status(403).json({
             "status": "error",
             "message": "An error occurred.",
             "error": {
-                "code": 401,
+                "code": 403,
                 "details": "You are not authorized to access this page!"
             }
         });

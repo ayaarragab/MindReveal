@@ -21,10 +21,16 @@ const processFailedRequests = (token) => {
 
 axiosInstance.interceptors.request.use(
   (config) => {
-
+    if (config.data  && config.data.username && config.data.username.includes('admin')) {
+      localStorage.setItem('role', 'admin');
+    }
+    if (config.method === 'post' && localStorage.getItem('role')) {
+      if (!config.data) {
+        config.data = {};
+      }
+      config.data.role = localStorage.getItem('role');
+    }
     const accessToken = localStorage.getItem('access-token');
-    const IsRole = localStorage.getItem('role')    
-      console.log(typeof config.data);
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -63,12 +69,7 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        
-        // Use axiosInstance instead of axios to maintain baseURL and interceptors
-        if (localStorage.getItem('role')) {
-          await axiosInstance.post('/token', { refreshToken, role: localStorage.getItem('role') });
-        } else
-          await axiosInstance.post('/token', { refreshToken });
+        await axiosInstance.post('/token', { refreshToken });
         const newAccessToken = response.accessToken;
         localStorage.setItem('access-token', newAccessToken);
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
@@ -81,13 +82,17 @@ axiosInstance.interceptors.response.use(
         // Clear tokens and redirect to login
         localStorage.removeItem('access-token');
         localStorage.removeItem('refresh-token');
-        window.location.href = '/login';
+        // window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
       }
     }
-
+    else if (error.response?.status === 403 && 
+      !originalRequest._retry) {
+        console.log(originalRequest);
+        
+    }
     // If not a 401 error or refresh failed, reject normally
     return Promise.reject(error);
   }

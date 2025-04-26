@@ -1,13 +1,14 @@
-import serverErrorsHandler from "../utils/helper.js";
 import { verifyAToken, verifyRToken, createTokens } from "./jwtHandler.js";
 
 
 export const authenticate = async(request, response, next) => {
         try {
+            
             const bearer = request.headers.authorization;
-            const isAdmin = request.body.role !== undefined;
-
-            if (!bearer) {                
+            const isAdmin = request.body?.role !== undefined;
+            if (!bearer) { 
+               console.log("!!!!!!!!!!");
+               
                 return response.status(401).json({
                     "status": "error",
                     "message": "An error occurred.",
@@ -38,7 +39,8 @@ export const authenticate = async(request, response, next) => {
                 if (user) {
                     request.user = user;
                     next();
-                } else {                    
+                } else {  
+                  
                     return response.status(401).json({
                         "status": "error",
                         "message": "An error occurred.",

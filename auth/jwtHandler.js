@@ -54,29 +54,27 @@ const createRefreshToken = (user) => {
 }
 
 
-export async function verifyAToken(token, isAdmin) {
+export async function verifyAToken(token) {
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         if (decoded?.data) {
             const decrypted = decrypt(decoded.data);
             const { id } = JSON.parse(decrypted);
-            
-            if (isAdmin) {
+            const user = await User.findById(id);
+            if (!user) {
                 const admin = await Admin.findById(id);
-                
-                if (admin) return admin;   
+                if (admin) return admin;
             } else {
-                const user = await User.findById(id);
-                if (user) return user;
+                return user;
             }
+            return false;
         }
     } catch (error) {
-        
         console.log("Invalid or tampered token:", error.message);
     }
     return false;
 }
-export async function verifyRToken(token, isAdmin) {
+export async function verifyRToken(token) {
     try {
         const decoded = jwt.verify(token, process.env.RJWT_SECRET_KEY);
 
@@ -84,14 +82,14 @@ export async function verifyRToken(token, isAdmin) {
             
             const decrypted = decrypt(decoded.data);
             const { id } = JSON.parse(decrypted);
-            
-            if (isAdmin) {                         
+            const user = await User.findById(id);
+            if (!user) {
                 const admin = await Admin.findById(id);
-                if (admin) return admin;   
+                if (admin) return admin;
             } else {
-                const user = await User.findById(id);
-                if (user) return user;
+                return user;
             }
+            return false;
         }
     } catch (error) {        
         console.log("Invalid or tampered token:", error.message);
