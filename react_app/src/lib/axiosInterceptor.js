@@ -69,16 +69,23 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        await axiosInstance.post('/token', { refreshToken });
-        const newAccessToken = response.accessToken;
+        // Request new token
+        console.log(refreshToken);
+        const refreshResponse = await axiosInstance.post('/token', { refreshToken });
+        
+        
+        const newAccessToken = refreshResponse.accessToken; // Access the new token from the response here
         localStorage.setItem('access-token', newAccessToken);
         axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
         
+        // Process any failed requests that were waiting for the new token
         processFailedRequests(newAccessToken);
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         
         return axiosInstance(originalRequest);
       } catch (refreshError) {
+        console.log(refreshError);
+        
         // Clear tokens and redirect to login
         localStorage.removeItem('access-token');
         localStorage.removeItem('refresh-token');
@@ -97,5 +104,6 @@ axiosInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 
 export default axiosInstance;

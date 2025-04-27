@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 export function LoginForm() {
   useEffect(() => {
-    localStorage.clear();
+    localStorage.removeItem('role');
   }, []);
   const [credentials, setCredentials] = useState({ username: "", password: "" });
   const login = useAuthStore((state) => state.login);
