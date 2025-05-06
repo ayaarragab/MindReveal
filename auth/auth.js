@@ -21,7 +21,7 @@ const validate = (request) => {
  */
 async function findUserByUsername(username, isAdmin) {
     if (isAdmin) {
-        return await Admin.findOne({ username });
+        return await Admin.findOne({ username }).explain("executionStats").then(console.log);;
     }
     return await User.findOne({ username });
 }
@@ -78,7 +78,6 @@ export async function register(request, response) {
             "status": "success",
             "message": "You have registered successfully.",
             tokens,
-            "data": [newAdmin]
         });
         } else {
             const newUser = await User.create({ username: request.body.username, password: request.body.password });
@@ -103,7 +102,6 @@ export async function register(request, response) {
                 "status": "success",
                 "message": "You have registered successfully.",
                 tokens,
-                "data": [newUser]
             });
         }
 
@@ -118,7 +116,7 @@ export async function register(request, response) {
  * @param {Object} response - The outgoing response object to send back to the client.
  */
 export async function login(request, response) {
-    try {
+    try {        
         const validateInput = validate(request);
         if (!validateInput) {
             return response.status(400).json({
@@ -165,7 +163,6 @@ export async function login(request, response) {
             "status": "success",
             "message": "You've logged in successfully.",
             ...tokens,
-            "data": [user]
         });
 
     } catch (error) {

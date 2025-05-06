@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
         },
         message: passwordNotValid => `${passwordNotValid.value} is not a valid password!`
     } },
+    thoughts: [{ type: mongoose.Types.ObjectId, ref: 'Thought', required: false }],
     refresh_token: { type: String, default: null },
     created_at: { type: Date, default: Date.now }
 })

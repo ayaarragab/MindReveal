@@ -37,7 +37,7 @@ export const createTokens = (user) => {
     const accessToken = jwt.sign(
         { data: encrypt(JSON.stringify({ id: user._id })) },
         process.env.JWT_SECRET,
-        { expiresIn: "15s" }
+        { expiresIn: "1d" }
     );
 
     const refreshToken = createRefreshToken(user);

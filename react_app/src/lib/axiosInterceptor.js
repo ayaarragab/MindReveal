@@ -84,8 +84,7 @@ axiosInstance.interceptors.response.use(
         
         return axiosInstance(originalRequest);
       } catch (refreshError) {
-        console.log(refreshError);
-        
+        console.log(refreshError);        
         // Clear tokens and redirect to login
         localStorage.removeItem('access-token');
         localStorage.removeItem('refresh-token');

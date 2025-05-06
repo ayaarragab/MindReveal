@@ -16,5 +16,4 @@ const thoughtModel = mongoose.Schema({
 })
 
 thoughtModel.index({ content: 'text' });
-
 export default mongoose.model('Thought', thoughtModel);

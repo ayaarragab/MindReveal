@@ -1,5 +1,4 @@
 export const authorize = (request, response, next) => {
-    
     const role = request.body.role;
     if (role !== undefined) {
         next();
